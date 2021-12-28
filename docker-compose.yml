@@ -1,0 +1,23 @@
+version: "2.3"
+services: 
+  laravel:
+    container_name: laravel
+    build: .
+    ports: [8000:8000]
+    volumes: 
+      - /app/vendor
+      - .:/app
+    links: [mysql]
+  mysql:
+    container_name: mysql
+    image: mysql:8.0
+    expose: [3306]
+    ports: [3306:3306]
+    volumes: [database:/var/lib/mysql]
+    environment:
+      MYSQL_DATABASE: todolist_db
+      MYSQL_ROOT_PASSWORD: admin
+volumes:
+  database:
+    external: 
+      name: mysql_data
